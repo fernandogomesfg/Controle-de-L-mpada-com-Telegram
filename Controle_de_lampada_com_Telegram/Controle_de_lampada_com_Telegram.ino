@@ -36,10 +36,10 @@ void conectarWifi() {
 #define lampada 0
 
 //Variavel para o token do bot
-#define botToken  "2034905971:AAHhbmh51xbAtv7Tf0apQg4y5ITyDALwDDw"
+#define botToken  ""
 
 //Variavel para o id da mensagem
-#define chatId "154782142"
+#define chatId ""
 
 
 void setup() {
