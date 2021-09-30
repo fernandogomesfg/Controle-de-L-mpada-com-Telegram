@@ -12,7 +12,7 @@ const char* senha = "fernando1610";
 
 //funcao responsavel pela conexao do ESP
 //se ele falha na  conexao, ele renecia a conexao
-void conectarWife() {
+void conectarWifi() {
   WiFi.begin(nomeWifi, senha);
 
   //se fosse para o ESP-WEONS
@@ -25,9 +25,9 @@ void conectarWife() {
     delay(1000);
 
     //tentar a conexao durante 15 segundos, apos isso, ele renicia o ESP
-    if (millis() > 15 000) 
+    if (millis() > 15000) {
       ESP.restart();
-    
+    }
     Serial.print("Conectado com sucesso");
   }
 }
@@ -38,21 +38,35 @@ void conectarWife() {
 //Variavel para o token do bot
 #define botToken  "2034905971:AAHhbmh51xbAtv7Tf0apQg4y5ITyDALwDDw"
 
+//Variavel para o id da mensagem
+#define chatId "154782142"
+
 
 void setup() {
   //Chamando a a funcao de conexao do ESP
-  conectarWife();
+  conectarWifi();
 
   //Chamando a lampada
   pinMode(lampada, OUTPUT);
 
   //chamando o botToken
   bot.setToken(botToken);
-  bot.attach(new Msg);
+  bot.attach(newMsg);
 
 }
 
+void  newMsg (FB_msg & msg ) {
+  if (msg.text.equals("liga")) {
+    digitalWrite(lampada, LOW);
+    bot.sendMessage ("Lampada Ligada", chatId );
+  } else if (msg.text.equals("desligar")) {
+    digitalWrite(lampada, HIGH);
+    bot.sendMessage ("Lampada Desligada", chatId );
+  }
+}
+
 void loop() {
-  // put your main code here, to run repeatedly:
+  //Metodo para verificar novas mensagens
+  bot.tick();
 
 }
